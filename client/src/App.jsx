@@ -19,6 +19,9 @@ function App() {
 
   return (
     <Routes>
+      <Route path="" element={<StudentHomePage />} />
+      <Route path="home" element={<StudentHomePage />} />
+
       <Route
         path="/auth"
         element={
@@ -69,8 +72,8 @@ function App() {
           />
         }
       >
-        <Route path="" element={<StudentHomePage />} />
-        <Route path="home" element={<StudentHomePage />} />
+        {/* <Route path="" element={<StudentHomePage />} />
+        <Route path="home" element={<StudentHomePage />} /> */}
         <Route path="courses" element={<StudentViewCoursesPage />} />
         <Route
           path="course/details/:id"
