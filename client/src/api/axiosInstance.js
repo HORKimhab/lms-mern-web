@@ -1,7 +1,11 @@
 import axios from "axios";
 
+
+console.log(process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:5000")
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  // Bitcoin
+  // baseURL: "http://localhost:5000",
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
 });
 
 axiosInstance.interceptors.request.use(
