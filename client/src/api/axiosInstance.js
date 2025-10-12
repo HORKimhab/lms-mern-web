@@ -1,11 +1,9 @@
 import axios from "axios";
 
+const envVite = import.meta.env; 
 
-console.log(process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:5000")
 const axiosInstance = axios.create({
-  // Bitcoin
-  // baseURL: "http://localhost:5000",
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
+  baseURL:envVite.VITE_BACKEND_URL
 });
 
 axiosInstance.interceptors.request.use(
