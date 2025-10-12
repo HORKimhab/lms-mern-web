@@ -1,31 +1,29 @@
-import { courseCategories } from "@/config";
-import banner from "../../../../public/banner-img.png";
-import { Button } from "@/components/ui/button";
-import { useContext, useEffect } from "react";
-import { StudentContext } from "@/context/student-context";
-import {
-  checkCoursePurchaseInfoService,
-  fetchStudentViewCourseListService,
-} from "@/services";
-import { AuthContext } from "@/context/auth-context";
-import { useNavigate } from "react-router-dom";
+import { courseCategories } from '@/config';
+import banner from '../../../../public/banner-img.png';
+import { Button } from '@/components/ui/button';
+import { useContext, useEffect } from 'react';
+import { StudentContext } from '@/context/student-context';
+import { checkCoursePurchaseInfoService, fetchStudentViewCourseListService } from '@/services';
+import { AuthContext } from '@/context/auth-context';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { GraduationCap } from 'lucide-react';
 
 function StudentHomePage() {
-  const { studentViewCoursesList, setStudentViewCoursesList } =
-    useContext(StudentContext);
+  const { studentViewCoursesList, setStudentViewCoursesList } = useContext(StudentContext);
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   function handleNavigateToCoursesPage(getCurrentId) {
     console.log(getCurrentId);
-    sessionStorage.removeItem("filters");
+    sessionStorage.removeItem('filters');
     const currentFilter = {
       category: [getCurrentId],
     };
 
-    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    sessionStorage.setItem('filters', JSON.stringify(currentFilter));
 
-    navigate("/courses");
+    navigate('/courses');
   }
 
   async function fetchAllStudentViewCourses() {
@@ -34,10 +32,7 @@ function StudentHomePage() {
   }
 
   async function handleCourseNavigate(getCurrentCourseId) {
-    const response = await checkCoursePurchaseInfoService(
-      getCurrentCourseId,
-      auth?.user?._id
-    );
+    const response = await checkCoursePurchaseInfoService(getCurrentCourseId, auth?.user?._id);
 
     if (response?.success) {
       if (response?.data) {
@@ -54,12 +49,31 @@ function StudentHomePage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <header className="px-4 lg:px-6 h-14 flex items-center border-b">
+        {/* Left: Logo */}
+        <Link to="/" className="flex items-center flex-shrink-0">
+          <GraduationCap className="h-8 w-8 mr-2" />
+          <span className="font-extrabold text-xl">LMS LEARN</span>
+        </Link>
+
+        {/* Center: Search box */}
+        <div className="flex-1 flex justify-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-1/2 border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Right: Auth */}
+        <Link to="/auth" className="font-extrabold text-xl flex-shrink-0">
+          Login
+        </Link>
+      </header>
       <section className="flex flex-col lg:flex-row items-center justify-between py-8 px-4 lg:px-8">
         <div className="lg:w-1/2 lg:pr-12">
           <h1 className="text-4xl font-bold mb-4">Learning thet gets you</h1>
-          <p className="text-xl">
-            Skills for your present and your future. Get Started with US
-          </p>
+          <p className="text-xl">Skills for your present and your future. Get Started with US</p>
         </div>
         <div className="lg:w-full mb-8 lg:mb-0">
           <img
@@ -102,12 +116,8 @@ function StudentHomePage() {
                 />
                 <div className="p-4">
                   <h3 className="font-bold mb-2">{courseItem?.title}</h3>
-                  <p className="text-sm text-gray-700 mb-2">
-                    {courseItem?.instructorName}
-                  </p>
-                  <p className="font-bold text-[16px]">
-                    ${courseItem?.pricing}
-                  </p>
+                  <p className="text-sm text-gray-700 mb-2">{courseItem?.instructorName}</p>
+                  <p className="font-bold text-[16px]">${courseItem?.pricing}</p>
                 </div>
               </div>
             ))
