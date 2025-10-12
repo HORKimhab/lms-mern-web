@@ -1,18 +1,55 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const authRoutes = require("./routes/auth-routes/index");
-const mediaRoutes = require("./routes/instructor-routes/media-routes");
-const instructorCourseRoutes = require("./routes/instructor-routes/course-routes");
-const studentViewCourseRoutes = require("./routes/student-routes/course-routes");
-const studentViewOrderRoutes = require("./routes/student-routes/order-routes");
-const studentCoursesRoutes = require("./routes/student-routes/student-courses-routes");
-const studentCourseProgressRoutes = require("./routes/student-routes/course-progress-routes");
+import mysql from 'mysql2'
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import authRoutes from './routes/auth-routes/index.js';
+import mediaRoutes from './routes/instructor-routes/media-routes.js';
+import instructorCourseRoutes from './routes/instructor-routes/course-routes.js';
+import studentViewCourseRoutes from './routes/student-routes/course-routes.js';
+import studentViewOrderRoutes from './routes/student-routes/order-routes.js';
+import studentCoursesRoutes from './routes/student-routes/student-courses-routes.js';
+import studentCourseProgressRoutes from './routes/student-routes/course-progress-routes.js';
+
+dotenv.config()
+// const authRoutes = require("./routes/auth-routes/index");
+// const mediaRoutes = require("./routes/instructor-routes/media-routes");
+// const instructorCourseRoutes = require("./routes/instructor-routes/course-routes");
+// const studentViewCourseRoutes = require("./routes/student-routes/course-routes");
+// const studentViewOrderRoutes = require("./routes/student-routes/order-routes");
+// const studentCoursesRoutes = require("./routes/student-routes/student-courses-routes");
+// const studentCourseProgressRoutes = require("./routes/student-routes/course-progress-routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
+const DB_TYPE = process.env.DB_TYPE;
+
+let db; 
+
+if (DB_TYPE === 'mysql') {
+  db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  })
+
+  db.connect(err => {
+    if (err) {
+      console.error('❌ MySQL connection failed:', err)
+    } else {
+      console.log('✅ Connected to MySQL')
+    }
+  })
+} else {
+  //database connection
+  mongoose
+    .connect(MONGO_URI)
+    .then(() => console.log("mongodb is connected"))
+    .catch((e) => console.log(e));
+}
+
 
 app.use(
   cors({
@@ -24,11 +61,6 @@ app.use(
 
 app.use(express.json());
 
-//database connection
-mongoose
-  .connect(MONGO_URI)
-  .then(() => console.log("mongodb is connected"))
-  .catch((e) => console.log(e));
 
 //routes configuration
 app.use("/auth", authRoutes);

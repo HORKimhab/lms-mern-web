@@ -1,10 +1,11 @@
-const express = require("express");
+import express from 'express'
+const router = express.Router()
+
+
 const {
   getCoursesByStudentId,
 } = require("../../controllers/student-controller/student-courses-controller");
 
-const router = express.Router();
-
 router.get("/get/:studentId", getCoursesByStudentId);
 
-module.exports = router;
+export default router;

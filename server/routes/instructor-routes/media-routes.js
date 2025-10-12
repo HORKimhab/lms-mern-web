@@ -1,11 +1,12 @@
-const express = require("express");
+import express from 'express'
+const router = express.Router()
+
 const multer = require("multer");
 const {
   uploadMediaToCloudinary,
   deleteMediaFromCloudinary,
 } = require("../../helpers/cloudinary");
 
-const router = express.Router();
 
 const upload = multer({ dest: "uploads/" });
 
@@ -68,4 +69,4 @@ router.post("/bulk-upload", upload.array("files", 10), async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
