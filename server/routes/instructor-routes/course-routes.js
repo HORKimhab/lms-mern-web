@@ -1,13 +1,12 @@
 import express from 'express'
 const router = express.Router()
 
-const {
-  addNewCourse,
-  getAllCourses,
-  getCourseDetailsByID,
-  updateCourseByID,
-} = require("../../controllers/instructor-controller/course-controller");
+import courseController from "../../controllers/instructor-controller/course-controller.js";
 
+const { addNewCourse, getAllCourses, getCourseDetailsByID, updateCourseByID } = courseController ;
+
+console.log({getAllCourses});
+console.log({getCourseDetailsByID});
 
 router.post("/add", addNewCourse);
 router.get("/get", getAllCourses);

@@ -1,10 +1,9 @@
 import express from 'express'
 const router = express.Router()
 
-const {
-  createOrder,
-  capturePaymentAndFinalizeOrder,
-} = require("../../controllers/student-controller/order-controller");
+import orderController from "../../controllers/student-controller/order-controller.js";
+
+const { createOrder, capturePaymentAndFinalizeOrder } = orderController;
 
 router.post("/create", createOrder);
 router.post("/capture", capturePaymentAndFinalizeOrder);

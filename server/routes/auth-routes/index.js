@@ -1,19 +1,18 @@
-import express from 'express'
-const router = express.Router()
-const {
-  registerUser,
-  loginUser,
-} = require("../../controllers/auth-controller/index");
-const authenticateMiddleware = require("../../middleware/auth-middleware");
+import express from 'express';
+import authController from '../../controllers/auth-controller/index.js';
+import authenticateMiddleware from '../../middleware/auth-middleware.js';
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.get("/check-auth", authenticateMiddleware, (req, res) => {
+const router = express.Router();
+const { registerUser, loginUser } = authController;
+
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+router.get('/check-auth', authenticateMiddleware, (req, res) => {
   const user = req.user;
 
   res.status(200).json({
     success: true,
-    message: "Authenticated user!",
+    message: 'Authenticated user!',
     data: {
       user,
     },

@@ -1,5 +1,5 @@
-const Course = require("../../models/Course");
-const StudentCourses = require("../../models/StudentCourses");
+import * as Course from "../../models/Course.js"
+import * as StudentCourses from "../../models/StudentCourses.js";
 
 const getAllStudentViewCourses = async (req, res) => {
   try {
@@ -110,7 +110,7 @@ const checkCoursePurchaseInfo = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getAllStudentViewCourses,
   getStudentViewCourseDetails,
   checkCoursePurchaseInfo,

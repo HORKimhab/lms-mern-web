@@ -1,13 +1,9 @@
 import express from 'express'
+import multer from 'multer'
+import cloudinary from "../../helpers/cloudinary.js";
+
 const router = express.Router()
-
-const multer = require("multer");
-const {
-  uploadMediaToCloudinary,
-  deleteMediaFromCloudinary,
-} = require("../../helpers/cloudinary");
-
-
+const { uploadMediaToCloudinary, deleteMediaFromCloudinary } = cloudinary;
 const upload = multer({ dest: "uploads/" });
 
 router.post("/upload", upload.single("file"), async (req, res) => {
@@ -15,7 +11,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     const result = await uploadMediaToCloudinary(req.file.path);
     res.status(200).json({
       success: true,
-      data: result,
+      data: result ,
     });
   } catch (e) {
     console.log(e);

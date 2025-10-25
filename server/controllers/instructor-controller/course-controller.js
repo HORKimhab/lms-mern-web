@@ -1,4 +1,4 @@
-const Course = require("../../models/Course");
+import * as Course from "../../models/Course.js"
 
 const addNewCourse = async (req, res) => {
   try {
@@ -31,6 +31,7 @@ const getAllCourses = async (req, res) => {
       data: coursesList,
     });
   } catch (e) {
+    console.trace(`getAllCourses: ${e}`);
     console.log(e);
     res.status(500).json({
       success: false,
@@ -56,10 +57,11 @@ const getCourseDetailsByID = async (req, res) => {
       data: courseDetails,
     });
   } catch (e) {
+    console.trace(`getCourseDetailsByID: ${e}`);
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Some error occured!" ,
     });
   }
 };
@@ -89,6 +91,7 @@ const updateCourseByID = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
+    console.trace()
     res.status(500).json({
       success: false,
       message: "Some error occured!",
@@ -96,7 +99,7 @@ const updateCourseByID = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   addNewCourse,
   getAllCourses,
   updateCourseByID,

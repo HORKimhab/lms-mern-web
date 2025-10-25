@@ -1,12 +1,11 @@
 import express from 'express'
-const router = express.Router()
-// export default router;
 
-const {
-  getStudentViewCourseDetails,
-  getAllStudentViewCourses,
-  checkCoursePurchaseInfo,
-} = require("../../controllers/student-controller/course-controller");
+import studentCourseController from "../../controllers/student-controller/course-controller.js";
+
+const router = express.Router()
+
+const { getStudentViewCourseDetails, getAllStudentViewCourses, checkCoursePurchaseInfo } = studentCourseController;
+
 
 
 router.get("/get", getAllStudentViewCourses);
