@@ -1,7 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { initialSignInFormData, initialSignUpFormData } from "@/config";
+import { useToast } from "@/hooks/use-toast";
 import { checkAuthService, loginService, registerService } from "@/services";
 import { createContext, useEffect, useState } from "react";
+
 
 export const AuthContext = createContext(null);
 
@@ -12,14 +14,38 @@ export default function AuthProvider({ children }) {
     authenticate: false,
     user: null,
   });
+  const { toast } = useToast(); // ✅ inside a React component
   const [loading, setLoading] = useState(true);
 
   async function handleRegisterUser(event) {
+    // Just only debug
+    const { toast } = useToast;
+
+    console.log('toast', toast)
+
+    toast({
+      title: "Account created successfully 🎉",
+      description: "You can now sign in with your email.",
+    });
+    // setActiveTab("signin");
+
     event.preventDefault();
     const data = await registerService(signUpFormData);
   }
 
   async function handleLoginUser(event) {
+    
+
+    // alert(JSON.stringify(toast + 'sdfsdf'))
+
+    // console.log('toast', toast)
+
+    // alert('sdfsdfs')
+    toast({
+      title: "Account created successfully 🎉",
+      description: "You can now sign in with your email.",
+    });
+    // return;
     event.preventDefault();
     const data = await loginService(signInFormData);
     console.log(data, "datadatadatadatadata");

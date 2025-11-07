@@ -1,7 +1,7 @@
 import axiosInstance from "@/api/axiosInstance";
 
 export async function registerService(formData) {
-  const { data } = await axiosInstance.post("/auth/register", {
+  const { data } = await axiosInstance.post("/api/v1/user/auth/register", {
     ...formData,
     role: "user",
   });
