@@ -101,7 +101,7 @@ function AuthPage() {
                   formData={signUpFormData}
                   setFormData={setSignUpFormData}
                   isButtonDisabled={!checkIfSignUpFormIsValid()}
-                  handleSubmit={handleRegisterUser}
+                  handleSubmit={(event) => handleRegisterUser(event, setActiveTab)}
                 />
               </CardContent>
             </Card>

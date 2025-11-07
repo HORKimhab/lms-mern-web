@@ -1,13 +1,24 @@
 import axiosInstance from "@/api/axiosInstance";
 
 export async function registerService(formData) {
-  const { data } = await axiosInstance.post("/api/v1/user/auth/register", {
-    ...formData,
-    role: "user",
-  });
-
-  return data;
-}
+  try {
+    const { data } = await axiosInstance.post("/api/v1/user/auth/register", {
+      ...formData,
+      role: "user",
+    });
+    return data;
+  } catch (error) {
+    console.trace('error', error)
+    if (error.response) {
+      console.error("Error response:", error.response.data);
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+    } else {
+      console.error("Error setting up request:", error.message);
+    }
+    
+    throw error;
+}}
 
 export async function loginService(formData) {
   const { data } = await axiosInstance.post("/auth/login", formData);

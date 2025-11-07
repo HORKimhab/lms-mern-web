@@ -4,7 +4,6 @@ import { useToast } from "@/hooks/use-toast";
 import { checkAuthService, loginService, registerService } from "@/services";
 import { createContext, useEffect, useState } from "react";
 
-
 export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
@@ -14,38 +13,44 @@ export default function AuthProvider({ children }) {
     authenticate: false,
     user: null,
   });
-  const { toast } = useToast(); // ✅ inside a React component
+  const { toast } = useToast();
   const [loading, setLoading] = useState(true);
 
-  async function handleRegisterUser(event) {
-    // Just only debug
-    const { toast } = useToast;
-
-    console.log('toast', toast)
-
-    toast({
-      title: "Account created successfully 🎉",
-      description: "You can now sign in with your email.",
-    });
-    // setActiveTab("signin");
-
+  async function handleRegisterUser(event, setActiveTab) {
     event.preventDefault();
-    const data = await registerService(signUpFormData);
+    try {
+      const data = await registerService(signUpFormData);
+      console.log("data", data);
+      toast({
+        title: "Account created successfully 🎉",
+        description: "You can now sign in with your email.",
+      });
+
+      setActiveTab("signin")
+      setSignUpFormData({
+        userName: "",
+        userEmail: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+
+      // ❌ Optional: show error toast
+      toast({
+        title: "Registration failed 😢",
+        description:
+          error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
   }
 
   async function handleLoginUser(event) {
-    
-
-    // alert(JSON.stringify(toast + 'sdfsdf'))
-
-    // console.log('toast', toast)
-
-    // alert('sdfsdfs')
-    toast({
-      title: "Account created successfully 🎉",
-      description: "You can now sign in with your email.",
-    });
-    // return;
+    // toast({
+    //   title: "Account created successfully 🎉",
+    //   description: "You can now sign in with your email.",
+    // });
     event.preventDefault();
     const data = await loginService(signInFormData);
     console.log(data, "datadatadatadatadata");
@@ -66,8 +71,6 @@ export default function AuthProvider({ children }) {
       });
     }
   }
-
-  //check auth user
 
   async function checkAuthUser() {
     try {
