@@ -21,7 +21,7 @@ export async function registerService(formData) {
 }}
 
 export async function loginService(formData) {
-  const { data } = await axiosInstance.post("/auth/login", formData);
+  const { data } = await axiosInstance.post("/api/v1/user/auth/login", formData);
 
   return data;
 }
