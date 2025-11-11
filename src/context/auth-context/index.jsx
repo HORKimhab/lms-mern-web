@@ -1,8 +1,8 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { initialSignInFormData, initialSignUpFormData } from "@/config";
-import { useToast } from "@/hooks/use-toast";
-import { checkAuthService, loginService, registerService } from "@/services";
-import { createContext, useEffect, useState } from "react";
+import { Skeleton } from '@/components/ui/skeleton';
+import { initialSignInFormData, initialSignUpFormData } from '@/config';
+import { useToast } from '@/hooks/use-toast';
+import { checkAuthService, loginService, registerService } from '@/services';
+import { createContext, useEffect, useState } from 'react';
 
 export const AuthContext = createContext(null);
 
@@ -20,28 +20,26 @@ export default function AuthProvider({ children }) {
     event.preventDefault();
     try {
       const data = await registerService(signUpFormData);
-      console.log("data", data);
+      console.log('data', data);
       toast({
-        title: "Account created successfully 🎉",
-        description: "You can now sign in with your email.",
+        title: 'Account created successfully 🎉',
+        description: 'You can now sign in with your email.',
       });
 
-      setActiveTab("signin")
+      setActiveTab('signin');
       setSignUpFormData({
-        userName: "",
-        userEmail: "",
-        password: "",
+        userName: '',
+        userEmail: '',
+        password: '',
       });
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error('Registration error:', error);
 
       // ❌ Optional: show error toast
       toast({
-        title: "Registration failed 😢",
-        description:
-          error.response?.data?.message ||
-          "Something went wrong. Please try again.",
-        variant: "destructive",
+        title: 'Registration failed 😢',
+        description: error.response?.data?.message || 'Something went wrong. Please try again.',
+        variant: 'destructive',
       });
     }
   }
@@ -53,13 +51,10 @@ export default function AuthProvider({ children }) {
     // });
     event.preventDefault();
     const data = await loginService(signInFormData);
-    console.log(data, "datadatadatadatadata");
+    console.log(data, 'datadatadatadatadata');
 
     if (data.success) {
-      sessionStorage.setItem(
-        "accessToken",
-        JSON.stringify(data.data.accessToken)
-      );
+      sessionStorage.setItem('accessToken', JSON.stringify(data.data.accessToken));
       setAuth({
         authenticate: true,
         user: data.data.user,
@@ -111,7 +106,7 @@ export default function AuthProvider({ children }) {
     checkAuthUser();
   }, []);
 
-  console.log(auth, "gf");
+  console.log(auth, 'gf');
 
   return (
     <AuthContext.Provider
