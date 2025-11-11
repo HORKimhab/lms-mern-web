@@ -8,11 +8,13 @@ import { AuthContext } from '@/context/auth-context';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { GraduationCap } from 'lucide-react';
+import { useLogout } from '@/hooks/use-logout';
 
 function StudentHomePage() {
   const { studentViewCoursesList, setStudentViewCoursesList } = useContext(StudentContext);
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const logout = useLogout();
 
   function handleNavigateToCoursesPage(getCurrentId) {
     console.log(getCurrentId);
@@ -66,9 +68,13 @@ function StudentHomePage() {
         </div>
 
         {/* Right: Auth */}
-        <Link to="/auth" className="font-extrabold text-xl flex-shrink-0">
-          Login
-        </Link>
+        {!auth?.authenticate ? (
+          <Link to="/auth" className="font-extrabold text-xl flex-shrink-0">
+            Login
+          </Link>
+        ) : (
+          <Button onClick={logout}>Sign Out</Button>
+        )}
       </header>
       <section className="flex flex-col lg:flex-row items-center justify-between py-8 px-4 lg:px-8">
         <div className="lg:w-1/2 lg:pr-12">
